@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 class="is-size-1">New Todo</h1>
+    {% with errors = get_flashed_messages(category_filter=['error']) %}
+        {% if errors %}
+            {% for msg in errors %}
+            <div class="alert is-danger">
+                {{msg}}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="/add" method="POST">
+        <div class="field has-addons">
+            <div class="control is-expanded">
+              <input class="input" type="text" name="Title" placeholder="What is the todo?">
+            </div>
+            <div class="control">
+              <a class="button is-info">
+                Add
+              </a>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+

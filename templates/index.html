@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1 class="is-size-1">Current Todos</h1>
+<a href="/add" class="button is-primary">Add A New Todo</a>
+{% for todo in todos %}
+<div class="card">
+    <div class="card-content">
+      <div class="content">
+        <strong>{{todo.Title}}</strong>  
+        <span class="has-text-right is-size-6">Last Updated {{todo.Posted}}</span>
+      </div>
+    </div>
+    <footer class="card-footer">
+        {% if todo.Finished == true %}
+        <div class="card-footer-item">
+            <form action="/update" method="POST">
+                <input type="hidden" name="Finished" value="false" />
+                <input type="hidden" name="ID" value="{{todo.ID}}" />
+                <button type="submit" class="button is-warning">Revert</button>
+            </form>
+        </div>
+        {% endif %}
+        {% if todo.Finished == false %}
+        <div class="card-footer-item">
+            <form action="/update" method="POST">
+                <input type="hidden" name="Finished" value="true" />
+                <input type="hidden" name="ID" value="{{todo.ID}}" />
+                <button type="submit" class="button is-success">Mark Done</button>
+            </form>
+        </div>
+        {% endif %}
+        <div class="card-footer-item">
+            <form action="/delete" method="POST">
+                <input type="hidden" name="ID" value="{{todo.ID}}" />
+                <button type="submit" class="button is-danger">Delete</button>
+            </form>
+        </div>
+      </footer>
+</div>
+<br />
+{% endfor %}
+{% endblock %}
